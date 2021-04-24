@@ -11,7 +11,7 @@ import java.io.*;
 import java.net.Socket;
 import java.awt.event.ActionEvent;
 
-public class ClientGUI extends JFrame {
+public class ClientGUI2 extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtFName;
@@ -36,7 +36,7 @@ public class ClientGUI extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Client.ClientGUI frame = new Client.ClientGUI();
+					ClientGUI frame = new ClientGUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -48,7 +48,7 @@ public class ClientGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ClientGUI() {
+	public ClientGUI2() {
 		setTitle("Cezmi's & Tim's DB Client");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 797, 503);
@@ -112,7 +112,6 @@ public class ClientGUI extends JFrame {
 				count ++;
 				System.out.println("Client " + count + " connected");
 			} catch (IOException ex) {
-				// TODO Auto-generated catch block
 				count--;
 				ex.printStackTrace();
 			}
@@ -126,6 +125,8 @@ public class ClientGUI extends JFrame {
 		btnAdd.addActionListener(e -> {
 			try {
 				outStream = new DataOutputStream(socket.getOutputStream());
+				inStream = new DataInputStream(socket.getInputStream());
+				String display = "";
 
 				//can get all, send in string and split string on other end using comma
 				String action = "Add";
@@ -140,8 +141,10 @@ public class ClientGUI extends JFrame {
 				outStream.writeUTF( action + "," +fName + ","+ lName + ","+ address + ","+ city + ","+
 						prov + ","+ postal + ","+ phone + ","+ email);
 
+				display = inStream.readUTF();
+				JOptionPane.showMessageDialog(null,display);
+
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		});
@@ -156,19 +159,15 @@ public class ClientGUI extends JFrame {
 				outStream = new DataOutputStream(socket.getOutputStream());
 				inStream = new DataInputStream(socket.getInputStream());
 				String displayInfo = "ID    First Name   Last Name  " +
-						"Phone Number  Email \t Street \t City " +
-						"Province  Postal Code \n";
+						"Phone Number  Email \t Street \t City \t" +
+						"Province \n Postal Code \n";
 				// can get all, send in string and split string on other end using comma
 				String action = "Find";
 				String fName = txtFName.getText();
 				outStream.writeUTF(  action + "," + fName);
 				displayInfo += inStream.readUTF();
 				txtDisplay.setText(displayInfo);
-				outStream.close();
-				inStream.close();
-
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		});
@@ -181,7 +180,10 @@ public class ClientGUI extends JFrame {
 		btnUpdate.addActionListener(e -> {
 			try {
 				outStream = new DataOutputStream(socket.getOutputStream());
-				String regExp = "[1-9]{1,4}";
+				inStream = new DataInputStream(socket.getInputStream());
+				String display = "";
+
+				String regExp = "[0-9]+";
 				// can get all, send in string and split string on other end using comma
 				if (txtID.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "Customer ID can not be null");
@@ -200,11 +202,11 @@ public class ClientGUI extends JFrame {
 					String id = txtID.getText();
 					outStream.writeUTF( action + "," + fName + ","+ lName + ","+ address + ","+ city + ","+
 							prov + ","+ postal + ","+ phone + ","+ email + "," + id);
+					display = inStream.readUTF();
+					JOptionPane.showMessageDialog(null,display);
 				}
-				outStream.close();
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				System.out.println("End of File");
 			}
 		});
 
@@ -222,12 +224,9 @@ public class ClientGUI extends JFrame {
 				System.out.println("Client " + count + " disconnected");
 				count --;
 				System.exit(0); // close app
-
-
-			} catch (IOException ex) {
-				// TODO Auto-generated catch block
+			} catch (Exception ex) {
 				count--;
-				ex.printStackTrace();
+				System.out.println("Stream Ended");
 			}
 		});
 		btnExit.setBackground(Color.RED);

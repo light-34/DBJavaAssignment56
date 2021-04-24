@@ -22,11 +22,8 @@ public class ThreadHandler extends Thread{
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-
 		try {
 			DataIO data;
-			//Customers newCustomer;
 			String fName;
 			String lName;
 			String address;
@@ -39,9 +36,6 @@ public class ThreadHandler extends Thread{
 			String action;
 			String customer;
 			String[] customerInfo;
-
-			// below is not working properly,
-			// doesn't want to add and update in one session
 
 			do {
 				customer = inStream.readUTF();
@@ -70,6 +64,7 @@ public class ThreadHandler extends Thread{
 								prov,
 								postal);
 						data.insertCustomer(addCustomer);
+						outStream.writeUTF(data.getAddedCustomer());
 					}
 					case "Update" -> {
 						fName = customerInfo[1];
@@ -93,6 +88,7 @@ public class ThreadHandler extends Thread{
 								prov,
 								postal);
 						data.updateCustomer(updatedCustomer);
+						outStream.writeUTF(data.getUpdatedCustomer());
 					}
 					case "Find" -> {
 						data = new DataIO();
@@ -105,10 +101,8 @@ public class ThreadHandler extends Thread{
 
 			}while(true);
 
-		} catch (IOException | ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
 }

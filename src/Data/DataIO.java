@@ -1,16 +1,14 @@
 package Data;
 
 import java.sql.*;
-import java.util.ArrayList;
-
-import javax.swing.JOptionPane;
-
 import Business.Customers;
 
 public class DataIO {
 
 	private Connection conn = null;
 	private String foundCustomers = "";
+	private String updatedCustomer = "";
+	private String addedCustomer = "";
 
 	// This Constructor is used to connect the DB
 	public DataIO() throws ClassNotFoundException, SQLException {
@@ -20,48 +18,16 @@ public class DataIO {
 
 	// This method is used to INSERT data into the customers table
 	public void insertCustomer(Customers customer) throws SQLException {
-
 		System.out.println("Insert Customer Table works");
-
 		String strSQL = "Insert into c_customers (fname, lname, phone, email, street, city, province, post_code) "
 				+ "values ('" + customer.getfName() + "', '" + customer.getlName() + "','" + customer.getPhoneNo()
 				+ "','" + customer.getEmail() + "','" + customer.getStreet() + "','" + customer.getCity() + "','"
 				+ customer.getProvince() + "','" + customer.getPostalCode() + "')";
 		Statement stm = conn.createStatement();
 		stm.executeUpdate(strSQL);
-
 		System.out.println("Insert Customer Table Data Inserted");
-		JOptionPane.showMessageDialog(null,"Customer added\nCustomer Name: " +  customer.getfName() + ", " + customer.getlName()
-				+ "\nPhone No: "+customer.getPhoneNo()
-				+ "\nEmail: "+customer.getEmail()
-				+ "\nStreet: "+customer.getStreet()
-				+ "\nCity: "+customer.getCity()
-				+ "\nProv: "+customer.getProvince()
-				+ "\nPostal Code: "+customer.getPostalCode()
-		);
-
+		addedCustomer = customer.getfName() + " "+ customer.getlName() + "\nhas been added";
 		stm.close();
-	}
-
-	// This method is designed to add all rows in Customers Table into an ArrayList
-	public ArrayList<Customers> getCustomers() throws SQLException {
-		ArrayList<Customers> custList = new ArrayList<Customers>();
-
-		String sqlQuery = "Select * from C_CUSTOMERS";
-
-		Statement stm = conn.createStatement();
-
-		ResultSet rst = stm.executeQuery(sqlQuery);
-
-		while (rst.next()) {
-			Customers cust1 = new Customers(rst.getInt(1), rst.getString(2), rst.getString(3), rst.getString(4),
-					rst.getString(5), rst.getString(6), rst.getString(7), rst.getString(8), rst.getString(9));
-			custList.add(cust1);
-		}
-
-		rst.close();
-		stm.close();
-		return custList;
 	}
 
 	// This method is designed to update rows in Customers Table
@@ -76,15 +42,8 @@ public class DataIO {
 		Statement stm = conn.createStatement();
 		stm.executeUpdate(strSQL);
 		System.out.println("Updated Customer Table Data Updated");
+		updatedCustomer = customer.getfName() + " "+ customer.getlName() + "\nhas been updated";
 		stm.close();
-		JOptionPane.showMessageDialog(null,"Customer Updated\nCustomer Name: " +  customer.getfName() + ", " + customer.getlName()
-				+ "\nPhone No: "+customer.getPhoneNo()
-				+ "\nEmail: "+customer.getEmail()
-				+ "\nStreet: "+customer.getStreet()
-				+ "\nCity: "+customer.getCity()
-				+ "\nProv: "+customer.getProvince()
-				+ "\nPostal Code: "+customer.getPostalCode()
-		);
 	}
 
 	//This method is used to find customers with specified first name
@@ -96,42 +55,45 @@ public class DataIO {
 			ResultSet rst = prepState.executeQuery();
 
 			while (rst.next()) {
-				foundCustomers += String.valueOf(rst.getInt(1)) + "\t" + rst.getString(2) + "\t" +
-						rst.getString(3) + "\t" +rst.getString(4) + "\t" +
-						rst.getString(5) + "\t" + rst.getString(6) + "\t" +
+				foundCustomers += String.valueOf(rst.getInt(1)) + "    " + rst.getString(2) + "\t" +
+						rst.getString(3) + "\t" +rst.getString(4) + "     " +
+						rst.getString(5) + "  " + rst.getString(6) + "\t" +
 						rst.getString(7) + "\t" + rst.getString(8) + "\t" +
 						rst.getString(9) + "\n";
 			}
 			rst.close();
 			prepState.close();
-
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			System.out.println("End of the DB records");
 		}
 	}
 
 	public String[] comboBoxLoader() throws SQLException {
 		String[] list = new String[14];
 		int i = 0;
-
 		String sqlQuery = "SELECT * FROM PROVINCES ORDER BY PROVINCENAME";
-
 		Statement stm = conn.createStatement();
-
 		ResultSet rst = stm.executeQuery(sqlQuery);
-
 		while (rst.next()) {
 			list[i] = rst.getString("provincename");
 			i++;
 		}
-
 		stm.close();
-
 		return list;
 	}
 
 	//This method will be used to send data to ThreadHandler Class
 	public String getFoundCustomers() {
 		return foundCustomers;
+	}
+
+	//This method will be used to send data to ThreadHandler Class
+	public String getUpdatedCustomer() {
+		return updatedCustomer;
+	}
+
+	//This method will be used to send data to ThreadHandler Class
+	public String getAddedCustomer() {
+		return addedCustomer;
 	}
 }
