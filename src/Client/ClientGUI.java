@@ -205,7 +205,16 @@ public class ClientGUI extends JFrame {
                         "Province \n Postal Code \n";
                 // can get all, send in string and split string on other end using comma
                 String action = "Find";
-                String fName = txtFName.getText();
+                String fName;
+                if(txtFName.getText().isEmpty())
+                {
+                	JOptionPane.showMessageDialog(null,"Please enter a first name to search for");
+                	return;
+                }
+                else 
+                {
+                	fName = txtFName.getText();
+                }                 
                 outStream.writeUTF(  action + "," + fName);
                 displayInfo += inStream.readUTF();
                 txtDisplay.setText(displayInfo);
@@ -233,15 +242,66 @@ public class ClientGUI extends JFrame {
                     JOptionPane.showMessageDialog(null, "Customer ID must be number");
                 } else {
                     String action = "Update";
-                    String fName = txtFName.getText();
-                    String lName = txtLName.getText();
+                    String email;
+                    String fName;
+                    String lName;
+                    if(txtFName.getText().isEmpty())
+                    {
+                    	JOptionPane.showMessageDialog(null,"Please enter a first name");
+                    	return;
+                    }
+                    else 
+                    {
+                    	fName = txtFName.getText();
+                    }
+                    if(txtLName.getText().isEmpty())
+                    {
+                    	JOptionPane.showMessageDialog(null,"Please enter a last name");
+                    	return;
+                    }
+                    else 
+                    {
+                    	lName = txtLName.getText();
+                    }
+                    
+                    
                     String address = txtAddress.getText();
                     String city = txtCity.getText();
                     String prov = (String) cmbBxProv.getSelectedItem();
                     String postal = txtPCode.getText();
-                    String phone = txtPhone.getText();
-                    String email = txtEmail.getText();
-                    String id = txtID.getText();
+                    // validation 
+                    String phone;
+                    String id;
+                    if(Long.parseLong(txtPhone.getText()) <= 9999999999L)
+                    {
+                    	phone = txtPhone.getText();
+                    }
+                    else 
+                    {
+                    	JOptionPane.showMessageDialog(null,"Phone number must be valid");
+                    	return;
+                    }
+                    
+                    if(txtEmail.getText().isEmpty())
+                    {
+                    	JOptionPane.showMessageDialog(null,"Please enter an email");
+                    	return;
+                    }
+                    else 
+                    {
+                    	email = txtEmail.getText();
+                    }
+                    
+                    if(Integer.parseInt(txtID.getText()) <= 1)
+                    {
+                    	id = txtID.getText();
+                    }
+                    else 
+                    {
+                    	JOptionPane.showMessageDialog(null,"Phone number must be valid");
+                    	return;
+                    }
+                    
                     outStream.writeUTF( action + "," + fName + ","+ lName + ","+ address + ","+ city + ","+
                             prov + ","+ postal + ","+ phone + ","+ email + "," + id);
                     display = inStream.readUTF();
