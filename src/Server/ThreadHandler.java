@@ -23,70 +23,43 @@ public class ThreadHandler extends Thread{
 	@Override
 	public void run() {
 		try {
-			DataIO data;
-			String fName;
-			String lName;
-			String address;
-			String city;
-			String prov;
-			String postal;
-			String phone;
-			String email;
-			int id;
+			DataIO data;			
+			//int id;
 			String action;
 			String customer;
 			String[] customerInfo;
 
 			do {
-				customer = inStream.readUTF();
+				customer = inStream.readUTF(); // expecting input here, giving error 
 				customerInfo = customer.split(",");
 				action = customerInfo[0];
 
 				switch (action) {
 					case "Add" -> {
-						fName = customerInfo[1];
-						lName = customerInfo[2];
-						address = customerInfo[3];
-						city = customerInfo[4];
-						prov = customerInfo[5];
-						postal = customerInfo[6];
-						phone = customerInfo[7];
-						email = customerInfo[8];
-
 						// logic for adding customer
 						data = new DataIO();
-						Customers addCustomer = new Customers(fName,
-								lName,
-								phone,
-								email,
-								address,
-								city,
-								prov,
-								postal);
+						Customers addCustomer = new Customers(customerInfo[1],
+								customerInfo[2],
+								customerInfo[7],
+								customerInfo[8],
+								customerInfo[3],
+								customerInfo[4],
+								customerInfo[5],
+								customerInfo[6]);
 						data.insertCustomer(addCustomer);
 						outStream.writeUTF(data.getAddedCustomer());
 					}
-					case "Update" -> {
-						fName = customerInfo[1];
-						lName = customerInfo[2];
-						address = customerInfo[3];
-						city = customerInfo[4];
-						prov = customerInfo[5];
-						postal = customerInfo[6];
-						phone = customerInfo[7];
-						email = customerInfo[8];
-						id = Integer.parseInt(customerInfo[9]);
-
+					case "Update" -> {						
 						// logic for updating customer
 						data = new DataIO();
-						Customers updatedCustomer = new Customers(id, fName,
-								lName,
-								phone,
-								email,
-								address,
-								city,
-								prov,
-								postal);
+						Customers updatedCustomer = new Customers(Integer.parseInt(customerInfo[9]), customerInfo[1],
+								customerInfo[2],
+								customerInfo[7],
+								customerInfo[8],
+								customerInfo[3],
+								customerInfo[4],
+								customerInfo[5],
+								customerInfo[6]);
 						data.updateCustomer(updatedCustomer);
 						outStream.writeUTF(data.getUpdatedCustomer());
 					}
