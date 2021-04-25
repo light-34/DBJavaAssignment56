@@ -44,6 +44,18 @@ public class ClientGUI2 extends JFrame {
             }
         });
     }
+    
+    public static boolean convertTest(String str) {
+        if (str == null) {
+            return false;
+        }
+        try {
+            long l = Long.parseLong(str);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
 
     /**
      * Create the frame.
@@ -159,15 +171,24 @@ public class ClientGUI2 extends JFrame {
                 String postal = txtPCode.getText();
                 // validation 
                 String phone;
-                if(Long.parseLong(txtPhone.getText()) <= 9999999999L)
-                {
-                	phone = txtPhone.getText();
-                }
-                else 
+                
+                if(!convertTest(txtPhone.getText()))
                 {
                 	JOptionPane.showMessageDialog(null,"Phone number must be valid");
                 	return;
                 }
+                else 
+                {
+                	if(Long.parseLong(txtPhone.getText()) <= 9999999999L)
+	                {
+	                	phone = txtPhone.getText();
+	                }
+	                else 
+	                {
+	                	JOptionPane.showMessageDialog(null,"Phone number must be valid");
+	                	return;
+	                }
+                }  
                 
                 if(txtEmail.getText().isEmpty())
                 {
@@ -272,14 +293,22 @@ public class ClientGUI2 extends JFrame {
                     // validation 
                     String phone;
                     String id;
-                    if(Long.parseLong(txtPhone.getText()) <= 9999999999L)
-                    {
-                    	phone = txtPhone.getText();
-                    }
-                    else 
+                    if(!convertTest(txtPhone.getText()))
                     {
                     	JOptionPane.showMessageDialog(null,"Phone number must be valid");
                     	return;
+                    }
+                    else 
+                    {
+                    	if(Long.parseLong(txtPhone.getText()) <= 9999999999L)
+    	                {
+    	                	phone = txtPhone.getText();
+    	                }
+    	                else 
+    	                {
+    	                	JOptionPane.showMessageDialog(null,"Phone number must be valid");
+    	                	return;
+    	                }
                     }
                     
                     if(txtEmail.getText().isEmpty())
