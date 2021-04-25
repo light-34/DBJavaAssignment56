@@ -321,13 +321,13 @@ public class ClientGUI2 extends JFrame {
                     	email = txtEmail.getText();
                     }
                     
-                    if(Integer.parseInt(txtID.getText()) <= 1)
+                    if(Integer.parseInt(txtID.getText()) >= 1)
                     {
                     	id = txtID.getText();
                     }
                     else 
                     {
-                    	JOptionPane.showMessageDialog(null,"Phone number must be valid");
+                    	JOptionPane.showMessageDialog(null,"ID must be 1 or greater to be valid");
                     	return;
                     }
                     
