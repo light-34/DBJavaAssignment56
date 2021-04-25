@@ -130,8 +130,29 @@ public class ClientGUI extends JFrame {
 
                 //can get all, send in string and split string on other end using comma
                 String action = "Add";
-                String fName = txtFName.getText();
-                String lName = txtLName.getText();
+                String email;
+                String fName;
+                String lName;
+                if(txtFName.getText().isEmpty())
+                {
+                	JOptionPane.showMessageDialog(null,"Please enter a first name");
+                	return;
+                }
+                else 
+                {
+                	fName = txtFName.getText();
+                }
+                if(txtLName.getText().isEmpty())
+                {
+                	JOptionPane.showMessageDialog(null,"Please enter a last name");
+                	return;
+                }
+                else 
+                {
+                	lName = txtLName.getText();
+                }
+                
+                
                 String address = txtAddress.getText();
                 String city = txtCity.getText();
                 String prov = (String) cmbBxProv.getSelectedItem();
@@ -148,7 +169,17 @@ public class ClientGUI extends JFrame {
                 	return;
                 }
                 
-                String email = txtEmail.getText();
+                if(txtEmail.getText().isEmpty())
+                {
+                	JOptionPane.showMessageDialog(null,"Please enter an email");
+                	return;
+                }
+                else 
+                {
+                	email = txtEmail.getText();
+                }
+                
+                
                 outStream.writeUTF( action + "," +fName + ","+ lName + ","+ address + ","+ city + ","+
                         prov + ","+ postal + ","+ phone + ","+ email);
 
