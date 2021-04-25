@@ -23,8 +23,7 @@ public class ThreadHandler extends Thread{
 	@Override
 	public void run() {
 		try {
-			DataIO data;			
-			//int id;
+			DataIO data;	
 			String action;
 			String customer;
 			String[] customerInfo;
