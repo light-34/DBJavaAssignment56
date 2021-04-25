@@ -136,7 +136,18 @@ public class ClientGUI extends JFrame {
                 String city = txtCity.getText();
                 String prov = (String) cmbBxProv.getSelectedItem();
                 String postal = txtPCode.getText();
-                String phone = txtPhone.getText();
+                // validation 
+                String phone;
+                if(Long.parseLong(txtPhone.getText()) <= 9999999999L)
+                {
+                	phone = txtPhone.getText();
+                }
+                else 
+                {
+                	JOptionPane.showMessageDialog(null,"Phone number must be valid");
+                	return;
+                }
+                
                 String email = txtEmail.getText();
                 outStream.writeUTF( action + "," +fName + ","+ lName + ","+ address + ","+ city + ","+
                         prov + ","+ postal + ","+ phone + ","+ email);
