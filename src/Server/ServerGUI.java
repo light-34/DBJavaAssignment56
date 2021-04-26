@@ -80,8 +80,9 @@ public class ServerGUI extends JFrame {
 				} catch (IOException ioException) {
 					ioException.printStackTrace();
 				}
+				String message = "Server is running and waiting for a client\n";
 
-				txtServer.setText("Server is running and waiting for a client");
+				txtServer.setText(message);
 				//Need a socket object to connect and communicate with the client
 				try {
 					while (true) {
@@ -95,8 +96,11 @@ public class ServerGUI extends JFrame {
 						outStream = new DataOutputStream(socket.getOutputStream());
 
 						InetAddress iAddress = socket.getInetAddress();
-						txtServer.setText("Host address : " + iAddress.getHostAddress() +
-								"\nName is : " + iAddress.getHostName());
+
+						message += "Host address : " + iAddress.getHostAddress() +
+								"\nName is : " + iAddress.getHostName() + "\n";
+						txtServer.setText(message);
+
 						System.out.println("\nName is : " + iAddress.getHostName());
 
 						//Create a new Thread
@@ -113,7 +117,7 @@ public class ServerGUI extends JFrame {
 					} catch (IOException ioException) {
 						ioException.printStackTrace();
 					}
-					ex.printStackTrace();
+					System.out.println("Server terminated");
 				}
 			}).start();
 		});

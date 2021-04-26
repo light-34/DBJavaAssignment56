@@ -44,7 +44,7 @@ public class ClientGUI extends JFrame {
             }
         });
     }
-    
+
     public static boolean convertTest(String str) {
         if (str == null) {
             return false;
@@ -116,6 +116,7 @@ public class ClientGUI extends JFrame {
         lblEmail.setBounds(285, 171, 82, 29);
         contentPane.add(lblEmail);
 
+        //Button for establishing connection
         JButton btnConnect = new JButton("Connect");
         btnConnect.addActionListener(e -> {
             try {
@@ -147,60 +148,60 @@ public class ClientGUI extends JFrame {
                 String lName;
                 if(txtFName.getText().isEmpty())
                 {
-                	JOptionPane.showMessageDialog(null,"Please enter a first name");
-                	return;
+                    JOptionPane.showMessageDialog(null,"Please enter a first name");
+                    return;
                 }
-                else 
+                else
                 {
-                	fName = txtFName.getText();
+                    fName = txtFName.getText();
                 }
                 if(txtLName.getText().isEmpty())
                 {
-                	JOptionPane.showMessageDialog(null,"Please enter a last name");
-                	return;
+                    JOptionPane.showMessageDialog(null,"Please enter a last name");
+                    return;
                 }
-                else 
+                else
                 {
-                	lName = txtLName.getText();
+                    lName = txtLName.getText();
                 }
-                
-                
+
+
                 String address = txtAddress.getText();
                 String city = txtCity.getText();
                 String prov = (String) cmbBxProv.getSelectedItem();
                 String postal = txtPCode.getText();
-                // validation 
+                // validation
                 String phone;
-                
+
                 if(!convertTest(txtPhone.getText()))
                 {
-                	JOptionPane.showMessageDialog(null,"Phone number must be valid");
-                	return;
+                    JOptionPane.showMessageDialog(null,"Phone number must be valid");
+                    return;
                 }
-                else 
+                else
                 {
-                	if(Long.parseLong(txtPhone.getText()) <= 9999999999L)
-	                {
-	                	phone = txtPhone.getText();
-	                }
-	                else 
-	                {
-	                	JOptionPane.showMessageDialog(null,"Phone number must be valid");
-	                	return;
-	                }
-                }  
-                
+                    if(Long.parseLong(txtPhone.getText()) <= 9999999999L)
+                    {
+                        phone = txtPhone.getText();
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(null,"Phone number must be valid");
+                        return;
+                    }
+                }
+
                 if(txtEmail.getText().isEmpty())
                 {
-                	JOptionPane.showMessageDialog(null,"Please enter an email");
-                	return;
+                    JOptionPane.showMessageDialog(null,"Please enter an email");
+                    return;
                 }
-                else 
+                else
                 {
-                	email = txtEmail.getText();
+                    email = txtEmail.getText();
                 }
-                
-                
+
+
                 outStream.writeUTF( action + "," +fName + ","+ lName + ","+ address + ","+ city + ","+
                         prov + ","+ postal + ","+ phone + ","+ email);
 
@@ -221,21 +222,21 @@ public class ClientGUI extends JFrame {
             try {
                 outStream = new DataOutputStream(socket.getOutputStream());
                 inStream = new DataInputStream(socket.getInputStream());
-                String displayInfo = "ID    First Name   Last Name  " +
-                        "Phone Number  Email \t Street \t City \t" +
-                        "Province \n Postal Code \n";
+                String displayInfo = "ID \t \t First Name \t \t Last Name  \t \t " +
+                        "Phone Number \t  Email \t \t Street \t \t City \t \t" +
+                        "Province \t \t Postal Code \n";
                 // can get all, send in string and split string on other end using comma
                 String action = "Find";
                 String fName;
                 if(txtFName.getText().isEmpty())
                 {
-                	JOptionPane.showMessageDialog(null,"Please enter a first name to search for");
-                	return;
+                    JOptionPane.showMessageDialog(null,"Please enter a first name to search for");
+                    return;
                 }
-                else 
+                else
                 {
-                	fName = txtFName.getText();
-                }                 
+                    fName = txtFName.getText();
+                }
                 outStream.writeUTF(  action + "," + fName);
                 displayInfo += inStream.readUTF();
                 txtDisplay.setText(displayInfo);
@@ -268,69 +269,69 @@ public class ClientGUI extends JFrame {
                     String lName;
                     if(txtFName.getText().isEmpty())
                     {
-                    	JOptionPane.showMessageDialog(null,"Please enter a first name");
-                    	return;
+                        JOptionPane.showMessageDialog(null,"Please enter a first name");
+                        return;
                     }
-                    else 
+                    else
                     {
-                    	fName = txtFName.getText();
+                        fName = txtFName.getText();
                     }
                     if(txtLName.getText().isEmpty())
                     {
-                    	JOptionPane.showMessageDialog(null,"Please enter a last name");
-                    	return;
+                        JOptionPane.showMessageDialog(null,"Please enter a last name");
+                        return;
                     }
-                    else 
+                    else
                     {
-                    	lName = txtLName.getText();
+                        lName = txtLName.getText();
                     }
-                    
-                    
+
+
                     String address = txtAddress.getText();
                     String city = txtCity.getText();
                     String prov = (String) cmbBxProv.getSelectedItem();
                     String postal = txtPCode.getText();
-                    // validation 
+                    // validation
                     String phone;
                     String id;
                     if(!convertTest(txtPhone.getText()))
                     {
-                    	JOptionPane.showMessageDialog(null,"Phone number must be valid");
-                    	return;
+                        JOptionPane.showMessageDialog(null,"Phone number must be valid");
+                        return;
                     }
-                    else 
+                    else
                     {
-                    	if(Long.parseLong(txtPhone.getText()) <= 9999999999L)
-    	                {
-    	                	phone = txtPhone.getText();
-    	                }
-    	                else 
-    	                {
-    	                	JOptionPane.showMessageDialog(null,"Phone number must be valid");
-    	                	return;
-    	                }
+                        if(Long.parseLong(txtPhone.getText()) <= 9999999999L)
+                        {
+                            phone = txtPhone.getText();
+                        }
+                        else
+                        {
+                            JOptionPane.showMessageDialog(null,"Phone number must be valid");
+                            return;
+                        }
                     }
-                    
+
                     if(txtEmail.getText().isEmpty())
                     {
-                    	JOptionPane.showMessageDialog(null,"Please enter an email");
-                    	return;
+                        JOptionPane.showMessageDialog(null,"Please enter an email");
+                        return;
                     }
-                    else 
+                    else
                     {
-                    	email = txtEmail.getText();
+                        email = txtEmail.getText();
                     }
-                    
+
                     if(Integer.parseInt(txtID.getText()) >= 1)
                     {
-                    	id = txtID.getText();
+                        id = txtID.getText();
                     }
-                    else 
+                    else
                     {
-                    	JOptionPane.showMessageDialog(null,"ID must be 1 or greater to be valid");
-                    	return;
+                        JOptionPane.showMessageDialog(null,"ID must be 1 or greater to be valid");
+                        return;
                     }
-                    
+
                     outStream.writeUTF( action + "," + fName + ","+ lName + ","+ address + ","+ city + ","+
                             prov + ","+ postal + ","+ phone + ","+ email + "," + id);
                     display = inStream.readUTF();
@@ -349,15 +350,20 @@ public class ClientGUI extends JFrame {
         JButton btnExit = new JButton("Exit");
         btnExit.addActionListener(e -> {
             try {
-                // try to establish connection with server
-                // need to reference current socket from connect button
-                socket.close();	// closed connection
-                System.out.println("Client " + count + " disconnected");
-                count --;
-                System.exit(0); // close app
-            } catch (Exception ex) {
+                if (socket != null) {
+                    socket.close();	// closed connection
+                    System.out.println("Client " + count + " disconnected");
+                    count --;
+                    System.exit(0); // close app
+                }
+                else
+                    System.exit(0); // close app
+            } catch (EOFException ex) {
                 count--;
-                System.out.println("Stream Ended");
+                System.out.println("EOF exception");
+            } catch (IOException ex) {
+                count--;
+                System.out.println("IO exception");
             }
         });
         btnExit.setBackground(Color.RED);
