@@ -222,9 +222,9 @@ public class ClientGUI extends JFrame {
             try {
                 outStream = new DataOutputStream(socket.getOutputStream());
                 inStream = new DataInputStream(socket.getInputStream());
-                String displayInfo = "ID \t \t First Name \t \t Last Name  \t \t " +
-                        "Phone Number \t  Email \t \t Street \t \t City \t \t" +
-                        "Province \t \t Postal Code \n";
+                String displayInfo = "ID     Name\tSurname\t" +
+                        "Phone No \t  Email \t  Street\tCity \t " +
+                        "Prov.\tP. Code \n";
                 // can get all, send in string and split string on other end using comma
                 String action = "Find";
                 String fName;

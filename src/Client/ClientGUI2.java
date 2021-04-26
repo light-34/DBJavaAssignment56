@@ -11,7 +11,7 @@ import java.io.*;
 import java.net.Socket;
 import java.awt.event.ActionEvent;
 
-class ClientGUI2 extends JFrame {
+public class ClientGUI extends JFrame {
 
     private JPanel contentPane;
     private JTextField txtFName;
@@ -36,7 +36,7 @@ class ClientGUI2 extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    Client.ClientGUI frame = new Client.ClientGUI();
+                    Client.ClientGUI2 frame = new Client.ClientGUI2();
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -222,9 +222,9 @@ class ClientGUI2 extends JFrame {
             try {
                 outStream = new DataOutputStream(socket.getOutputStream());
                 inStream = new DataInputStream(socket.getInputStream());
-                String displayInfo = "ID \t \t First Name \t \t Last Name  \t \t " +
-                        "Phone Number \t  Email \t \t Street \t \t City \t \t" +
-                        "Province \t \t Postal Code \n";
+                String displayInfo = "ID     Name\tSurname\t" +
+                        "Phone No \t  Email \t  Street\tCity \t " +
+                        "Prov.\tP. Code \n";
                 // can get all, send in string and split string on other end using comma
                 String action = "Find";
                 String fName;

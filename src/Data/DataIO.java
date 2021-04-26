@@ -55,10 +55,11 @@ public class DataIO {
 			ResultSet rst = prepState.executeQuery();
 
 			while (rst.next()) {
-				foundCustomers += String.valueOf(rst.getInt(1)) + "\t" + "\t" + rst.getString(2) + "\t" + "\t" +
-						rst.getString(3) + "\t" + "\t" + rst.getString(4) + "\t" +
-						rst.getString(5) + "\t" + "\t" + rst.getString(6) + "\t" + "\t" +
-						rst.getString(7) + "\t" +  "\t" + rst.getString(8) + "\t" + "\t" +
+
+				foundCustomers += String.valueOf(rst.getInt(1)) + "     " + rst.getString(2) +  "\t" +
+						rst.getString(3) +  "\t" + rst.getString(4) + "\t" +
+						rst.getString(5)  + "\t" + rst.getString(6) + "\t" +
+						rst.getString(7) + "\t" + rst.getString(8)  + "\t" +
 						rst.getString(9) + "\n";
 			}
 			rst.close();
