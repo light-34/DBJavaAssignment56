@@ -74,7 +74,7 @@ public class ThreadHandler extends Thread{
 			}while(true);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Connection lost");
 		}
 	}
 }
